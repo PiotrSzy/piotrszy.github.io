@@ -1,0 +1,8 @@
+body {
+  --playback-logo-image: url('kff1.png');
+}
+cast-media-player {
+  --progress-color: rgb(255, 255, 0);
+  --splash-image: url('kff.png');
+  --splash-size: cover;
+}
