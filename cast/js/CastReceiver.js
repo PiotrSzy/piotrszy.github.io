@@ -25,6 +25,8 @@ import { CastQueue } from './queuing.js';
 
 const context = cast.framework.CastReceiverContext.getInstance();
 
+context.addCustomMessageListener("urn:x-cast:com.kff.test", function(e) { console.log("EVENT", e);});
+
 // all of these do not work; the CastDebugLogger instance must be initialized earlier
 console.log("before: is_device_registered " +  context.getDeviceCapabilities().is_device_registered);
 //context.getDeviceCapabilities().is_device_registered = true;
