@@ -23,9 +23,10 @@ limitations under the License.
 
 import { CastQueue } from './queuing.js';
 
+const CUSTOM_CHANNEL = "urn:x-cast:com.kff.test";
+
 const context = cast.framework.CastReceiverContext.getInstance();
 
-context.addCustomMessageListener("urn:x-cast:com.kff.test", function(e) { console.log("EVENT", e);});
 
 // all of these do not work; the CastDebugLogger instance must be initialized earlier
 console.log("before: is_device_registered " +  context.getDeviceCapabilities().is_device_registered);
@@ -36,6 +37,18 @@ console.log("after: is_device_registered " +  context.getDeviceCapabilities().is
 
 const playerManager = context.getPlayerManager();
 
+
+context.addCustomMessageListener(CUSTOM_CHANNEL, 
+    function(e) { 
+        console.log("EVENT", e);
+        if (e && e.data && e.data.command == "test") {
+           context.sendCustomMessage(CUSTOM_CHANNEL, {
+                type: 'status',
+                message: 'test',
+                context: context
+           }) 
+        }
+    });
 
 const LOG_RECEIVER_TAG = 'Receiver';
 
@@ -163,5 +176,6 @@ context.start({
   playbackConfig: playbackConfig,
   supportedCommands: cast.framework.messages.Command.ALL_BASIC_MEDIA |
                       cast.framework.messages.Command.QUEUE_PREV |
-                      cast.framework.messages.Command.QUEUE_NEXT
+                      cast.framework.messages.Command.QUEUE_NEXT,
+  customNamespaces: { [CUSTOM_CHANNEL]: cast.framework.system.MessageType.JSON }
 });
