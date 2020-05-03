@@ -25,6 +25,7 @@ import { CastQueue } from './queuing.js';
 
 const context = cast.framework.CastReceiverContext.getInstance();
 
+// all of these do not work; the CastDebugLogger instance must be initialized earlier
 console.log("before: is_device_registered " +  context.getDeviceCapabilities().is_device_registered);
 //context.getDeviceCapabilities().is_device_registered = true;
 context.getDeviceCapabilities_ = context.getDeviceCapabilities;
@@ -40,6 +41,11 @@ const LOG_RECEIVER_TAG = 'Receiver';
  * Debug Logger
  */
 const castDebugLogger = cast.debug.CastDebugLogger.getInstance();
+if (!castDebugLogger.B) {
+  console.log("Hack 1 did not work, trying hack 2");
+  castDebugLogger.B = 1;
+}
+
 
 /**
  * WARNING: Make sure to turn off debug logger for production release as it
