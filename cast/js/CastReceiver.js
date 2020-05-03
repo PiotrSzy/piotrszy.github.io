@@ -26,7 +26,9 @@ import { CastQueue } from './queuing.js';
 const context = cast.framework.CastReceiverContext.getInstance();
 
 console.log("before: is_device_registered " +  context.getDeviceCapabilities().is_device_registered);
-context.getDeviceCapabilities().is_device_registered = true;
+//context.getDeviceCapabilities().is_device_registered = true;
+context.getDeviceCapabilities_ = context.getDeviceCapabilities;
+context.getDeviceCapabilities = function() { let t=this.getDeviceCapabilities_(); t.is_device_registered=true; return t;};
 console.log("after: is_device_registered " +  context.getDeviceCapabilities().is_device_registered);
 
 const playerManager = context.getPlayerManager();
