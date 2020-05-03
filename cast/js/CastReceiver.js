@@ -44,8 +44,7 @@ context.addCustomMessageListener(CUSTOM_CHANNEL,
         if (e && e.data && e.data.command == "test") {
            context.sendCustomMessage(CUSTOM_CHANNEL, {
                 type: 'status',
-                message: 'test',
-                context: context
+                message: playerManager.getCurrentTimeSec()
            }) 
         }
     });
