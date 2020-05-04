@@ -42,10 +42,14 @@ context.addCustomMessageListener(CUSTOM_CHANNEL,
     function(e) { 
         console.log("EVENT", e);
         if (e && e.data && e.data.command == "test") {
-           context.sendCustomMessage(CUSTOM_CHANNEL, {
+            let recipient = e.senderId;
+            context.sendCustomMessage(
+              CUSTOM_CHANNEL,
+              recipient,  
+              {
                 type: 'status',
-                message: playerManager.getCurrentTimeSec()
-           }) 
+                message: playerManager && playerManager.getCurrentTimeSec()
+              });
         }
     });
 
