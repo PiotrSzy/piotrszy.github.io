@@ -27,13 +27,20 @@ const CUSTOM_CHANNEL = "urn:x-cast:com.kff.test";
 
 const context = cast.framework.CastReceiverContext.getInstance();
 
+function ovshow(p) {
+    let r = document.getElementById("myoverlay").style.display = p ? "block" :"none";
+    return r;
+}
+ovshow(true);
 
 // all of these do not work; the CastDebugLogger instance must be initialized earlier
-console.log("before: is_device_registered " +  context.getDeviceCapabilities().is_device_registered);
-//context.getDeviceCapabilities().is_device_registered = true;
-context.getDeviceCapabilities_ = context.getDeviceCapabilities;
-context.getDeviceCapabilities = function() { let t=this.getDeviceCapabilities_(); t.is_device_registered=true; return t;};
-console.log("after: is_device_registered " +  context.getDeviceCapabilities().is_device_registered);
+if (context.getDeviceCapabilities()) {
+    console.log("before: is_device_registered " + context.getDeviceCapabilities().is_device_registered);
+    //context.getDeviceCapabilities().is_device_registered = true;
+    context.getDeviceCapabilities_ = context.getDeviceCapabilities;
+    context.getDeviceCapabilities = function() { let t=this.getDeviceCapabilities_(); t.is_device_registered=true; return t;};
+    console.log("after: is_device_registered " +  context.getDeviceCapabilities().is_device_registered);
+}
 
 const playerManager = context.getPlayerManager();
 
@@ -41,15 +48,27 @@ const playerManager = context.getPlayerManager();
 context.addCustomMessageListener(CUSTOM_CHANNEL, 
     function(e) { 
         console.log("EVENT", e);
-        if (e && e.data && e.data.command == "test") {
+        if (e && e.data) {
+            let resp = null;
+            if (e.data.command == "test") {
+                resp = {
+                    type: 'status',
+                    message: playerManager && playerManager.getCurrentTimeSec()
+                } 
+            } else if (e.data.command == "show") {
+                let msg = ovshow(e.data.value); 
+                resp = {
+                    type: 'myoverlay',
+                    message: msg 
+                } 
+            }
             let recipient = e.senderId;
-            context.sendCustomMessage(
-              CUSTOM_CHANNEL,
-              recipient,  
-              {
-                type: 'status',
-                message: playerManager && playerManager.getCurrentTimeSec()
-              });
+            if (resp) {
+                context.sendCustomMessage(
+                  CUSTOM_CHANNEL,
+                  recipient,
+                  resp);
+            }
         }
     });
 

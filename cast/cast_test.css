@@ -6,3 +6,28 @@ cast-media-player {
   --splash-image: url('kff.png');
   --splash-size: cover;
 }
+
+#myoverlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0.0,0.5);
+  z-index: 12;
+  cursor: pointer;
+}
+
+#mytext{
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  font-size: 50px;
+  color: red;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
+
