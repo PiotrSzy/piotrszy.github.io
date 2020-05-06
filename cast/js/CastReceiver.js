@@ -135,13 +135,30 @@ playerManager.addEventListener(
 /**
  *  playerManager listen for TIME_UPDATE
  */
+if (false) {
 playerManager.addEventListener(
   cast.framework.events.EventType.TIME_UPDATE, (event) => {
     // castDebugLogger.info(LOG_RECEIVER_TAG,
     //  'TIME_UPDATE ' + event.currentMediaTime);
     document.getElementById("mytext").innerHTML = `time: ${event.currentMediaTime}`;
 });
+}
 
+/**
+ *  playerManager requestAnimationFrame
+ */
+if (true) {
+    window.requestAnimationFrame(onUpdate);
+}
+
+function onUpdate(t) {
+    if (playerManager) {
+        let at = playerManager.getAbsoluteTimeForMediaTime();
+        let ct = playerManager.getCurrentTimeSec();
+        document.getElementById("mytext").innerHTML = `at: ${at} ct: ${ct}`;
+    }
+    window.requestAnimationFrame(onUpdate);
+}
 
 
 /**
