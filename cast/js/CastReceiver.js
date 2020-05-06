@@ -148,17 +148,29 @@ playerManager.addEventListener(
  *  playerManager requestAnimationFrame
  */
 if (true) {
+    let t0 = 0, avg = 0, prev = 0, skipped = 0, skavg = 0;
+    function onUpdate(t) {
+        let dt = t - t0;
+        avg = 0.9 * avg + 0.1 * dt; 
+        if (playerManager) {
+            let ct = playerManager.getCurrentTimeSec();
+            if (ct == prev) {
+                ++skipped;
+            } else {
+                skipped = 0;
+            }
+            skavg = 0.9 * skavg + 0.1 * skipped;
+            //let at = playerManager.getAbsoluteTimeForMediaTime(ct);
+            //document.getElementById("mytext").innerHTML = `at: ${at} ct: ${ct}`;
+            document.getElementById("mytext").innerHTML = `ct: ${ct} t.avg: ${avg} s.avg: ${skavg}`;
+
+        }
+        window.requestAnimationFrame(onUpdate);
+    }
+    
     window.requestAnimationFrame(onUpdate);
 }
 
-function onUpdate(t) {
-    if (playerManager) {
-        let at = playerManager.getAbsoluteTimeForMediaTime();
-        let ct = playerManager.getCurrentTimeSec();
-        document.getElementById("mytext").innerHTML = `at: ${at} ct: ${ct}`;
-    }
-    window.requestAnimationFrame(onUpdate);
-}
 
 
 /**
