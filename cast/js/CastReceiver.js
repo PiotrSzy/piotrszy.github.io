@@ -133,6 +133,18 @@ playerManager.addEventListener(
 });
 
 /**
+ *  playerManager listen for TIME_UPDATE
+ */
+playerManager.addEventListener(
+  cast.framework.events.EventType.TIME_UPDATE, (event) => {
+    // castDebugLogger.info(LOG_RECEIVER_TAG,
+    //  'TIME_UPDATE ' + event.currentMediaTime);
+    document.getElementById("mytext").innerHTML = `time: ${event.currentMediaTime}`;
+});
+
+
+
+/**
  * Intercept the LOAD request to be able to read in a contentId and get data.
  */
 playerManager.setMessageInterceptor(
