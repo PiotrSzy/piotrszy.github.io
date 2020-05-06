@@ -163,7 +163,7 @@ if (true) {
             skavg = 0.9 * skavg + 0.1 * skipped;
             //let at = playerManager.getAbsoluteTimeForMediaTime(ct);
             //document.getElementById("mytext").innerHTML = `at: ${at} ct: ${ct}`;
-            document.getElementById("mytext").innerHTML = `ct: ${ct} fps.avg: ${avg > 0 ? 1.avg : 0} s.avg: ${skavg}`;
+            document.getElementById("mytext").innerHTML = `ct: ${ct} fps.avg: ${avg > 0 ? 1 / avg : 0} s.avg: ${skavg}`;
 
         }
         window.requestAnimationFrame(onUpdate);
