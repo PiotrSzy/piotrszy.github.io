@@ -16,7 +16,7 @@ cast-media-player {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0.0,0.5);
+  background-color: rgba(1,1,1,0);
   z-index: 12;
   cursor: pointer;
 }
