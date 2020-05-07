@@ -28,7 +28,7 @@ const CUSTOM_CHANNEL = "urn:x-cast:com.kff.test";
 const context = cast.framework.CastReceiverContext.getInstance();
 
 function ovshow(p) {
-    let r = document.getElementById("myoverlay").style.display = p ? "block" :"none";
+    let r = document.getElementById("mytext2").style.display = p ? "block" :"none";
     return r;
 }
 ovshow(true);
@@ -140,7 +140,7 @@ playerManager.addEventListener(
   cast.framework.events.EventType.TIME_UPDATE, (event) => {
     // castDebugLogger.info(LOG_RECEIVER_TAG,
     //  'TIME_UPDATE ' + event.currentMediaTime);
-    document.getElementById("mytext").innerHTML = `time: ${event.currentMediaTime}`;
+    document.getElementById("mytext2").innerHTML = `time: ${event.currentMediaTime}`;
 });
 }
 
@@ -164,7 +164,7 @@ if (true) {
             //let at = playerManager.getAbsoluteTimeForMediaTime(ct);
             //document.getElementById("mytext").innerHTML = `at: ${at} ct: ${ct}`;
             let fps = (avg > 0) ? 1000 / avg : 0;
-            document.getElementById("mytext").innerHTML = `ct: ${ct} fps.avg: ${fps} s.avg: ${skavg}`;
+            document.getElementById("mytext2").innerHTML = `ct: ${ct} fps.avg: ${fps} s.avg: ${skavg}`;
 
         }
         window.requestAnimationFrame(onUpdate);
