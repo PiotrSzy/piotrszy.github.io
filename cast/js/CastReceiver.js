@@ -148,23 +148,31 @@ playerManager.addEventListener(
  *  playerManager requestAnimationFrame
  */
 if (true) {
-    let t0 = 0, avg = 0, prev = 0, skipped = 0, skavg = 0;
+    let t0 = 0, sec = 0, avg = 0, prev = 0, skipped = 0, fcnt = 0;
     function onUpdate(t) {
         let dt = t - t0;
         avg = 0.9 * avg + 0.1 * dt; 
         t0 = t;
+        fcnt++;
         if (playerManager) {
             let ct = playerManager.getCurrentTimeSec();
             if (ct == prev) {
+                // number of times the current time was not updated (or paused)
                 ++skipped;
-            } else {
-                skipped = 0;
-            }
-            skavg = 0.9 * skavg + 0.1 * skipped;
+            } 
+            prev = ct;
             //let at = playerManager.getAbsoluteTimeForMediaTime(ct);
             //document.getElementById("mytext").innerHTML = `at: ${at} ct: ${ct}`;
-            let fps = (avg > 0) ? 1000 / avg : 0;
-            document.getElementById("mytext2").innerHTML = `ct: ${ct} fps.avg: ${fps} s.avg: ${skavg}`;
+            let nsec = Math.floor(t * 1000);
+            if (nsec != sec) {
+                sec = nsec;
+
+                let fps = ((avg > 0) ? 1000 / avg : 0).toFixed(1);
+                let cts = ct.toFixed(2);
+                document.getElementById("mytext2").innerHTML = `ct: ${cts} fps.avg: ${fps} [${fcnt}] time not updated: ${skipped}`;
+                fcnt = 0;
+                skipped = 0;
+            }
 
         }
         window.requestAnimationFrame(onUpdate);
