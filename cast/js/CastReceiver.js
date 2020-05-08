@@ -163,7 +163,7 @@ if (true) {
             prev = ct;
             //let at = playerManager.getAbsoluteTimeForMediaTime(ct);
             //document.getElementById("mytext").innerHTML = `at: ${at} ct: ${ct}`;
-            let nsec = Math.floor(t * 1000);
+            let nsec = Math.floor(t / 1000);
             if (nsec != sec) {
                 sec = nsec;
 
